@@ -8,18 +8,17 @@ abstract class SpaceShip {
   //hit
   //isDestroyed
 
-  void hit() {
-    int newHealth = health - firePower;
-    print("Current health is $newHealth");
-  }
+  void hit(int firePower);
 
-  void isDestroyed() { //bool 
-    if (health == true){
-    print("The ship is destroyed");
+  bool isDestroyed() { //bool 
+    if (health <= 0 ){
+      return true;
+    } else {
+      return false;
     } 
-    else{
-    print("The ship has taken damage!");
-} } 
+    }
+
+    SpaceShip(this.health, this.firePower); 
   
   
 }
@@ -30,38 +29,59 @@ class BattleField {
     //Spaceships hit each other
     //until one of them is destroyed
 
-    var selectedShip = Random().nextBool();
+    final selectedShip = Random().nextBool();
     
     if(selectedShip){
       print("Ship 1");
     }else{
       print("Ship 2");
     }
+
+    //take turns to hit 
+    //get from hit function
     }
   }
 
-class ArmoredSpaceShip {
+class ArmoredSpaceShip extends SpaceShip {
+  
   //randomly absorbs hit
-  //percentage to double
+  double absorbHit = Random().nextDouble() * 0.4;
 
+  @override
+    void hit(int firePower){
+      double damage;
+      damage = firePower - absorbHit;
+      health = health - damage.toInt();
+    }
 
-  double maxArmorPower = 0.40;
-  Random randAbsorb = new Random();
-  double absorb = randAbsorb.nextDouble(0.5);
+    @override
+    void isDestroyed(){
+      print('Armored Ship is destroyed! /n Game over!');
+    }
+
+    ArmoredSpaceShip(health, firePower): super(health, firePower);
+
 }
 
-class HighSpeedSpaceShip {
+class HighSpeedSpaceShip extends SpaceShip {
   //whether dodges hit or not
   //dodge => true, not dodged => false
-  //bool dodging; 
 
-
-  final randBool = Random();
-  final dodging = randBool.nextBool();
-
-  if (dodging == true){
-    print('The bullet is dodged'); 
-  } else {
-    print('You are hit!');
+  @override
+  void hit(int firePower) {
+    bool dodging = Random().nextBool();
   }
+
+  if(dodging == false) {
+    health -= firePower;
+    print('You are hit!'); 
+  } else {
+    print('The bullet is dodged');
+  }
+
+  @override
+    void isDestroyed(){
+      print('High Speed Ship is destroyed! /n Game over!');
+    }
+        HighSpeedSpaceShip(health, firePower): super(health, firePower);
 }
