@@ -19,8 +19,6 @@ abstract class SpaceShip {
     }
 
     SpaceShip(this.health, this.firePower); 
-  
-  
 }
 
 class BattleField {
@@ -29,16 +27,17 @@ class BattleField {
     //Spaceships hit each other
     //until one of them is destroyed
 
-    final selectedShip = Random().nextBool();
-    
-    if(selectedShip){
-      print("Ship 1");
-    }else{
-      print("Ship 2");
+    while(sp1.health != && sp2.health != 0) {
+      sp1.hit(sp2.firePower);
+      print("Spaceship 1 got hit!");
+      print("Spaceship 1 current health: ${sp1.health} /n");
+
+      sp2.hit(sp1.firePower);
+      print("Spaceship 2 got hit!");
+      print("Spaceship 2 current health: ${sp2.health} /n"); 
     }
 
-    //take turns to hit 
-    //get from hit function
+   
     }
   }
 
@@ -74,7 +73,7 @@ class HighSpeedSpaceShip extends SpaceShip {
 
   if(dodging == false) {
     health -= firePower;
-    print('You are hit!'); 
+    print('Spaceship is hit!'); 
   } else {
     print('The bullet is dodged');
   }
